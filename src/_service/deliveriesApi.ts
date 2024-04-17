@@ -1,9 +1,9 @@
 import { API_URL } from "../settings";
-import { handleHttpErrors } from "./FetchUtils";
+import { handleHttpErrors, makeOptions } from "./FetchUtils";
 
-const URL = API_URL + "/deliveries";
+const DELIVERY_URL = API_URL + "/deliveries";
 
-interface Delivery {
+interface DeliveryType {
   id: number | null;
   deliveryDate: Date | null;
   fromWarehouse: string;
@@ -11,8 +11,21 @@ interface Delivery {
 }
 
 async function getDeliveries() {
-  return await fetch(URL).then(handleHttpErrors);
+  return await fetch(DELIVERY_URL).then(handleHttpErrors);
 }
 
-export type { Delivery };
-export { getDeliveries };
+async function createDelivery(
+  newDelivery: DeliveryType
+): Promise<DeliveryType> {
+  const method = newDelivery.id ? "PUT" : "POST";
+  const options = makeOptions(method, newDelivery);
+  const URL = newDelivery.id
+    ? `${DELIVERY_URL}/${newDelivery.id}`
+    : DELIVERY_URL;
+  return fetch(URL, options).then(handleHttpErrors);
+}
+
+async function getDeliveryProducts() {}
+
+export type { DeliveryType };
+export { getDeliveries, getDeliveryProducts, createDelivery };

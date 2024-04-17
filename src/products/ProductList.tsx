@@ -45,7 +45,7 @@ export default function ProductList() {
         </thead>
         <tbody>
           {products.map((product) => {
-            return Product(product);
+            return Product(product, nav);
           })}
         </tbody>
       </table>
