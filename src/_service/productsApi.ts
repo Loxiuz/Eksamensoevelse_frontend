@@ -15,6 +15,10 @@ async function getProducts() {
   return await fetch(PRODUCT_URL).then(handleHttpErrors);
 }
 
+async function getProduct(id: number) {
+  return await fetch(`${PRODUCT_URL}/${id}`).then(handleHttpErrors);
+}
+
 async function addProduct(newProduct: ProductType): Promise<ProductType> {
   const method = newProduct.id ? "PUT" : "POST";
   const options = makeOptions(method, newProduct);
@@ -22,5 +26,10 @@ async function addProduct(newProduct: ProductType): Promise<ProductType> {
   return fetch(URL, options).then(handleHttpErrors);
 }
 
+async function deleteProduct(id: number) {
+  const options = makeOptions("DELETE", null);
+  return await fetch(`${PRODUCT_URL}/${id}`, options);
+}
+
 export type { ProductType };
-export { getProducts, addProduct };
+export { getProducts, addProduct, deleteProduct, getProduct };

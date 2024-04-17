@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Product from "./Product";
 
 export default function ProductList() {
-  const [products, setProducts] = useState(Array<ProductType>);
+  const [products, setProducts] = useState<ProductType[]>([]);
   const nav = useNavigate();
 
   useEffect(() => {
