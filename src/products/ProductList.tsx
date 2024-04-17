@@ -34,15 +34,12 @@ export default function ProductList() {
       <table>
         <thead>
           <tr>
-            <th></th>
+            <td>Details</td>
             <th>
               <button>Name</button>
             </th>
             <th>
               <button>Price</button>
-            </th>
-            <th>
-              <button>Weight in grams</button>
             </th>
           </tr>
         </thead>
