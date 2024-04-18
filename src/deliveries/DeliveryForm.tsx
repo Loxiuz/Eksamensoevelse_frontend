@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { DeliveryType, createDelivery } from "../_service/deliveriesApi";
-
-const EMPTY_DELIVERY = {
-  id: null,
-  deliveryDate: null,
-  fromWarehouse: "",
-  destination: "",
-};
+import {
+  DeliveryType,
+  EMPTY_DELIVERY,
+  createDelivery,
+} from "../_service/deliveriesApi";
 
 export default function DeliveryForm() {
   const [deliveryFormData, setDeliveryFormData] =

@@ -1,15 +1,16 @@
 import { NavigateFunction } from "react-router-dom";
 import { ProductType } from "../_service/productsApi";
-import "./ProductDetails.css";
+import "../DetailsDialog.css";
 
 export default function ProductDetails(props: {
   product: ProductType;
   nav: NavigateFunction;
 }) {
   const { product, nav } = props;
+
   if (product) {
     return (
-      <dialog id="details-dialog" open={true}>
+      <dialog className="details-dialog" open={true}>
         <button
           onClick={() => {
             nav("/products", { state: { dialogActive: false } });
@@ -17,7 +18,7 @@ export default function ProductDetails(props: {
         >
           Close
         </button>
-        <table>
+        <table className="details-table">
           <tbody>
             <tr>
               <td>

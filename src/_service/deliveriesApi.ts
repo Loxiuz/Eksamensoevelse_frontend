@@ -10,6 +10,13 @@ interface DeliveryType {
   destination: string;
 }
 
+const EMPTY_DELIVERY = {
+  id: null,
+  deliveryDate: null,
+  fromWarehouse: "",
+  destination: "",
+};
+
 async function getDeliveries() {
   return await fetch(DELIVERY_URL).then(handleHttpErrors);
 }
@@ -25,7 +32,14 @@ async function createDelivery(
   return fetch(URL, options).then(handleHttpErrors);
 }
 
-async function getDeliveryProducts() {}
+async function getDeliveryProductOrders(id: number) {
+  return await fetch(`${DELIVERY_URL}/${id}/orders`).then(handleHttpErrors);
+}
 
 export type { DeliveryType };
-export { getDeliveries, getDeliveryProducts, createDelivery };
+export {
+  getDeliveries,
+  getDeliveryProductOrders,
+  createDelivery,
+  EMPTY_DELIVERY,
+};

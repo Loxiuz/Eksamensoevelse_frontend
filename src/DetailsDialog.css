@@ -1,14 +1,14 @@
-#details-dialog {
+.details-dialog {
   position: fixed;
   top: 10em;
   text-align: left;
   display: grid;
   row-gap: 10px;
 }
-#details-dialog td {
+.details-table td {
   padding-right: 20px;
   padding-left: 20px;
 }
-#details-dialog button {
+.details-dialog button {
   padding: 5px;
 }

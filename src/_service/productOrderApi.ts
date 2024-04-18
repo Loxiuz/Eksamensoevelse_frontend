@@ -1,11 +1,11 @@
-import { Delivery } from "./deliveriesApi";
-import { Product } from "./productsApi";
+import { DeliveryType } from "./deliveriesApi";
+import { ProductType } from "./productsApi";
 
-interface ProductOrder {
+interface ProductOrderType {
   id: number | null;
-  product: Product;
-  dilvery: Delivery;
+  product: ProductType;
+  delivery: DeliveryType;
   quantity: number;
 }
 
-export type { ProductOrder };
+export type { ProductOrderType };
