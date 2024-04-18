@@ -42,6 +42,7 @@
 }
 
 #home-btn {
-  position: fixed;
-  top: 5%;
+  position: absolute;
+  top: 1%;
+  left: 10%;
 }

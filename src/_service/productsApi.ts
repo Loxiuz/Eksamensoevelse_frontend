@@ -30,7 +30,7 @@ async function addProduct(newProduct: ProductType): Promise<ProductType> {
   const method = newProduct.id ? "PUT" : "POST";
   const options = makeOptions(method, newProduct);
   const URL = newProduct.id ? `${PRODUCT_URL}/${newProduct.id}` : PRODUCT_URL;
-  return fetch(URL, options).then(handleHttpErrors);
+  return await fetch(URL, options).then(handleHttpErrors);
 }
 
 async function deleteProduct(id: number) {
