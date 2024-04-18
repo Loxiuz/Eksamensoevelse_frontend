@@ -1,5 +1,6 @@
 import { API_URL } from "../settings";
 import { handleHttpErrors, makeOptions } from "./FetchUtils";
+import { ProductOrderType } from "./productOrderApi";
 
 const DELIVERY_URL = API_URL + "/deliveries";
 
@@ -19,6 +20,16 @@ const EMPTY_DELIVERY = {
 
 async function getDeliveries() {
   return await fetch(DELIVERY_URL).then(handleHttpErrors);
+}
+
+async function addProductOrdersToDelivery(
+  newOrders: ProductOrderType[],
+  deliveryId: number
+): Promise<ProductOrderType[]> {
+  const options = makeOptions("POST", newOrders);
+  return await fetch(`${DELIVERY_URL}/${deliveryId}/orders`, options).then(
+    handleHttpErrors
+  );
 }
 
 async function createDelivery(
@@ -42,4 +53,5 @@ export {
   getDeliveryProductOrders,
   createDelivery,
   EMPTY_DELIVERY,
+  addProductOrdersToDelivery,
 };

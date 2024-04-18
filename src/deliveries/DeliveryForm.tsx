@@ -1,15 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   DeliveryType,
   EMPTY_DELIVERY,
   createDelivery,
 } from "../_service/deliveriesApi";
+import {
+  ProductOrderType,
+  getAllProductOrders,
+} from "../_service/productOrderApi";
+import ProductOrderForm from "../product-order/ProductOrderForm";
 
 export default function DeliveryForm() {
   const [deliveryFormData, setDeliveryFormData] =
     useState<DeliveryType>(EMPTY_DELIVERY);
+  const [productOrders, setProductOrders] = useState<ProductOrderType[]>([]);
   const nav = useNavigate();
+
+  useEffect(() => {
+    async function fetchProductOrders() {
+      try {
+        const productOrdersRes = await getAllProductOrders();
+        setProductOrders(productOrdersRes);
+      } catch (error) {
+        console.error("Error fetching product orders:", productOrders);
+      }
+    }
+    fetchProductOrders();
+  }, [setProductOrders, productOrders]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const target = e.currentTarget;
@@ -31,29 +49,33 @@ export default function DeliveryForm() {
   }
 
   return (
-    <form>
-      <label htmlFor="deliveryDate">Date:</label>
-      <input
-        name="deliveryDate"
-        type="date"
-        onChange={handleChange}
-        // value={`${deliveryFormData.deliveryDate}`}
-      />
-      <label htmlFor="fromWarehouse">Warehouse:</label>
-      <input
-        name="fromWarehouse"
-        type="text"
-        onChange={handleChange}
-        value={deliveryFormData.fromWarehouse}
-      />
-      <label htmlFor="destination">Destination:</label>
-      <input
-        name="destination"
-        type="text"
-        onChange={handleChange}
-        value={deliveryFormData.destination}
-      />
-      <button onClick={handleSubmit}>Add</button>
-    </form>
+    <>
+      <form>
+        <label htmlFor="deliveryDate">Date:</label>
+        <input
+          name="deliveryDate"
+          type="date"
+          onChange={handleChange}
+          // value={`${deliveryFormData.deliveryDate}`}
+        />
+        <label htmlFor="fromWarehouse">Warehouse:</label>
+        <input
+          name="fromWarehouse"
+          type="text"
+          onChange={handleChange}
+          value={deliveryFormData.fromWarehouse}
+        />
+        <label htmlFor="destination">Destination:</label>
+        <input
+          name="destination"
+          type="text"
+          onChange={handleChange}
+          value={deliveryFormData.destination}
+        />
+        <button onClick={handleSubmit}>Add</button>
+      </form>
+      <h2>Choose product orders:</h2>
+      <ProductOrderForm productOrders={productOrders} />
+    </>
   );
 }
