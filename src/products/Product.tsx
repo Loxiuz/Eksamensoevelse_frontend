@@ -1,9 +1,17 @@
 import { NavigateFunction } from "react-router-dom";
 import { ProductType, deleteProduct } from "../_service/productsApi";
 
-export default function Product(product: ProductType, nav: NavigateFunction) {
+export default function Product(props: {
+  product: ProductType;
+  nav: NavigateFunction;
+}) {
+  const { product, nav } = props;
+
   function handleDetailsClicked(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
+    nav("/products", {
+      state: { chosenProduct: product, dialogActive: true },
+    });
   }
   function handleEditClicked(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();

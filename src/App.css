@@ -40,3 +40,8 @@
 .read-the-docs {
   color: #888;
 }
+
+#home-btn {
+  position: fixed;
+  top: 5%;
+}

@@ -1,36 +1,35 @@
 import { useEffect, useState } from "react";
-import { ProductType, addProduct, getProduct } from "../_service/productsApi";
+import {
+  EMPTY_PRODUCT,
+  ProductType,
+  addProduct,
+  getProduct,
+} from "../_service/productsApi";
 import "./ProductForm.css";
 import { useLocation, useNavigate } from "react-router-dom";
-
-const EMPTY_PRODUCT = {
-  id: null,
-  name: "",
-  price: 0,
-  weightInGrams: 0,
-};
 
 export default function ProductForm() {
   const { state } = useLocation();
   const [isEditClicked, setIsEditClicked] = useState(state?.isEditClicked);
+  const [chosenProductId] = useState(Number(state?.id));
   const [productFormData, setProductFormData] =
     useState<ProductType>(EMPTY_PRODUCT);
   const nav = useNavigate();
 
   useEffect(() => {
-    if (isEditClicked && !productFormData.id) {
+    if (isEditClicked) {
       const fetchProduct = async () => {
         try {
-          const fetchProduct = await getProduct(productFormData.id || 0);
+          const fetchProduct = await getProduct(chosenProductId);
           setProductFormData(fetchProduct);
         } catch (error) {
-          console.error("Error fetching product: " + productFormData.id);
+          console.error("Error fetching product: " + chosenProductId);
         }
       };
       fetchProduct();
     }
     setIsEditClicked(false);
-  }, [isEditClicked, productFormData, setIsEditClicked]);
+  }, [isEditClicked, chosenProductId, setIsEditClicked]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const target = e.currentTarget;

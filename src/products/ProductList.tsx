@@ -1,10 +1,19 @@
 import { useEffect, useState } from "react";
-import { ProductType, getProducts } from "../_service/productsApi";
-import { useNavigate } from "react-router-dom";
+import {
+  EMPTY_PRODUCT,
+  ProductType,
+  getProducts,
+} from "../_service/productsApi";
+import { useLocation, useNavigate } from "react-router-dom";
 import Product from "./Product";
+import ProductDetails from "./ProductDetails";
 
 export default function ProductList() {
   const [products, setProducts] = useState<ProductType[]>([]);
+  const { state } = useLocation();
+  const [dialogActive, setDialogActive] = useState(false);
+  const [chosenProduct, setChosenProduct] =
+    useState<ProductType>(EMPTY_PRODUCT);
   const nav = useNavigate();
 
   useEffect(() => {
@@ -18,6 +27,16 @@ export default function ProductList() {
     }
     fetchData();
   }, [setProducts]);
+
+  useEffect(() => {
+    if (state?.dialogActive) {
+      setDialogActive(true);
+      setChosenProduct(state.chosenProduct);
+    } else {
+      setDialogActive(false);
+      setChosenProduct(EMPTY_PRODUCT);
+    }
+  }, [state]);
 
   return (
     <>
@@ -45,10 +64,11 @@ export default function ProductList() {
         </thead>
         <tbody>
           {products.map((product) => {
-            return Product(product, nav);
+            return <Product key={product.id} product={product} nav={nav} />;
           })}
         </tbody>
       </table>
+      {dialogActive && <ProductDetails product={chosenProduct} nav={nav} />}
     </>
   );
 }

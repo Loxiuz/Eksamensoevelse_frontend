@@ -11,6 +11,13 @@ interface ProductType {
   weightInGrams: number;
 }
 
+const EMPTY_PRODUCT = {
+  id: null,
+  name: "",
+  price: 0,
+  weightInGrams: 0,
+};
+
 async function getProducts() {
   return await fetch(PRODUCT_URL).then(handleHttpErrors);
 }
@@ -32,4 +39,4 @@ async function deleteProduct(id: number) {
 }
 
 export type { ProductType };
-export { getProducts, addProduct, deleteProduct, getProduct };
+export { getProducts, addProduct, deleteProduct, getProduct, EMPTY_PRODUCT };
